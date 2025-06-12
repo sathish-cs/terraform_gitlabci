@@ -82,3 +82,11 @@ Add AWS secret keys for terraform to authenticate.
 In this case credentials not needed to pass in .gitlab-ci yml.
 
 ---
+
+###  Explanation
+This folder structure stores all Terraform modules in the terraform_modules directory, which can be referenced from other folders (different environments or projects).
+
+- terraform_modules -  Contains the Terraform modules.
+
+- dev -  The Dev environment resources with its own Terraform state file.
+

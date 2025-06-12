@@ -1,0 +1,62 @@
+stages:
+  - validate
+  - plan
+  - approve
+  - apply
+
+variables:
+  TF_PLAN_FILE: "plan.out"
+  TF_STATE_BUCKET: "sattesteu" # Change to your bucket name
+  TF_STATE_KEY: "iam-user/terraform.tfstate"
+  TF_REGION: "eu-central-1"
+
+# Cache plugins and .terraform dir
+cache:
+  key: ${CI_PROJECT_NAME}
+  paths:
+    - .terraform/
+
+
+before_script:
+
+  - terraform init -backend-config="bucket=${TF_STATE_BUCKET}" -backend-config="key=${TF_STATE_KEY}" -backend-config="region=${TF_REGION}"
+
+
+validate:
+  stage: validate
+  tags:
+    - dev-runner
+  script:
+    - echo "List all files and terraform validate"
+    - terraform validate
+    - terraform fmt -recursive
+
+plan:
+  stage: plan
+  tags:
+    - dev-runner
+
+  script:
+    - terraform plan -out=$TF_PLAN_FILE
+  artifacts:
+    paths:
+      - $TF_PLAN_FILE
+    expire_in: 1 hour
+
+approve:
+  stage: approve
+  tags:
+    - dev-runner
+
+  when: manual
+  allow_failure: false
+  script:
+    - echo "Manual approval required to apply changes"
+
+apply:
+  stage: apply
+  tags:
+    - dev-runner
+
+  script:
+    - terraform apply $TF_PLAN_FILE

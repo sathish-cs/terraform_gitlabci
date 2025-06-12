@@ -66,7 +66,7 @@ sudo gitlab-runner status
 - **URL**: `http://<your_gitlab_ip>`
 - **Token**: From GitLab → Settings → CI/CD → Runners
 - **Executor**: `shell` or `docker`
-- **Description/Tags**: `aws`
+- **Description/Tags**: `dev-runner` # You can provide any value
 
 ---
 

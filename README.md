@@ -100,3 +100,6 @@ This folder structure stores all Terraform modules in the terraform_modules dire
 - dev -  It deploy dev resources with its own Terraform state file.
 - prod - It deploy Prod environment resources with its own Terraform state file
 
+---
+
+Note: The modules in this repository is to explain a simple approach to provisioning infrastructure with multi env setup. For production-grade environments, this setup should be enhanced to support scalability, high availability & other best practices.

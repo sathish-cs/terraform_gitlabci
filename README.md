@@ -70,7 +70,11 @@ sudo gitlab-runner status
 
 ---
 
-## 3. Setup AWS Credentials as GitLab CI/CD Variables
+## 3. Install Terraform
+
+Install terraform by using this `https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli`
+
+## 4. Setup AWS Credentials as GitLab CI/CD Variables
 
 Go to:
 `GitLab Project → Settings → CI/CD → Variables`
@@ -86,7 +90,13 @@ In this case credentials not needed to pass in .gitlab-ci yml.
 ###  Explanation
 This folder structure stores all Terraform modules in the terraform_modules directory, which can be referenced from other folders (different environments or projects).
 
+- Reusable Terraform modules
+- Separate environment configs for dev & prod
+- GitLab Runners decoupled for both environment and stored secrets in CI/CD variables.
+- Manual `apply` stage  to approve the changes to prevent accidental changes
+
 - terraform_modules -  Contains the Terraform modules.
 
-- dev -  The Dev environment resources with its own Terraform state file.
+- dev -  It deploy dev resources with its own Terraform state file.
+- prod - It deploy Prod environment resources with its own Terraform state file
 

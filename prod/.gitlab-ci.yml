@@ -21,7 +21,7 @@ cache:
 validate:
   stage: validate
   tags:
-    - dev-runner
+    - prod-runner # It should match the tag of the runner
   script:
     - echo "List all files and terraform validate"
     - terraform validate
@@ -30,7 +30,7 @@ validate:
 plan:
   stage: plan
   tags:
-    - dev-runner
+    - prod-runner
 
   script:
     - terraform plan -out=$TF_PLAN_FILE
@@ -42,7 +42,7 @@ plan:
 approve:
   stage: approve
   tags:
-    - dev-runner
+    - prod-runner
 
   when: manual
   allow_failure: false
@@ -52,7 +52,7 @@ approve:
 apply:
   stage: apply
   tags:
-    - dev-runner
+    - prod-runner
 
   script:
     - terraform apply $TF_PLAN_FILE
